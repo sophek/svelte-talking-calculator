@@ -218,6 +218,7 @@
   <div class="column">
     <div class="columns">
       <div class="column">
+        <h2>Talking calculator</h2>
         <h1 class="display">{display}</h1>
       </div>
     </div>
