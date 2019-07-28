@@ -199,10 +199,10 @@
   }
 
   .calculator {
-    width: 500px;
-    margin-top: 100px;
+    margin: 50px auto;
+    border: solid 1px;
+    width: 350px;
   }
-
   .display {
     width: 320px;
     margin-top: -27px;
@@ -212,13 +212,21 @@
     height: 50px;
     padding: 10px;
   }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 </style>
 
 <div class="columns calculator">
   <div class="column">
     <div class="columns">
+      <div class="column" style="padding-bottom:20px">
+        <h2>Svelte Talking Calculator</h2>
+      </div>
+    </div>
+    <div class="columns">
       <div class="column">
-        <h2>Talking calculator</h2>
         <h1 class="display">{display}</h1>
       </div>
     </div>
