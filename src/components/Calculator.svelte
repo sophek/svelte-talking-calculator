@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import formatMoney from "accounting-js/lib/formatMoney.js";
+  import formatNumber from "accounting-js/lib/formatNumber.js";
 
   //TextToSpeech.talk("Hello Beautiful World!");
   let previous = null;
@@ -28,7 +28,7 @@
     "+",
     0,
     ".",
-    "C",
+    "Del",
     "="
   ];
 
@@ -64,7 +64,10 @@
   };
 
   const functionFactory = func => () => {
-    sayIt(formatMoney(display));
+    if (func !== "AC") {
+      sayIt(formatNumber(display));
+    }
+
     let operatorAction = "";
     switch (func) {
       case "AC":
@@ -80,19 +83,18 @@
         break;
       case "÷":
         operatorAction = divide();
-        sayIt("divide by");
+        sayIt("divided by");
         break;
       case "-":
         operatorAction = subtract();
         sayIt("subtract");
         break;
       case "=":
-        sayIt("equal");
+        sayIt("equals");
         operatorAction = equal();
         break;
-      case "C":
-        sayIt("clear");
-        operatorAction = clear();
+      case "Del":
+        operatorAction = back();
         break;
       case "%":
         sayIt("percent");
@@ -122,6 +124,10 @@
     operatorClicked = true;
   };
 
+  const back = () => {
+    display = display.slice(0, -1);
+  };
+
   const multiply = () => {
     operator = (a, b) => a * b;
     previous = display;
@@ -144,7 +150,7 @@
   const equal = () => {
     console.log("equal");
     display = operator(Number(previous), Number(display));
-    sayIt(formatMoney(display));
+    sayIt(formatNumber(display));
     previous = null;
     operatorClicked = true;
   };
@@ -160,7 +166,7 @@
 
   const sayIt = phrase => {
     if ("speechSynthesis" in window) {
-      var msg = new SpeechSynthesisUtterance(phrase);
+      var msg = new SpeechSynthesisUtterance(phrase.replace(".00", ""));
       window.speechSynthesis.speak(msg);
     }
   };
